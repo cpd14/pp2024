@@ -5,8 +5,12 @@ class Student:
         self.student_dob = student_dob
         self.student_courses = {}
 
-    def input_marks(self, course_id, mark):
-        self.student_courses[course_id] = mark
+    def input_marks(self):
+        num_courses = int(input(f"Enter the number of courses for student {self.student_id}: "))
+        for _ in range(num_courses):
+            course_id = input("Enter course ID: ")
+            mark = float(input(f"Enter the mark for course {course_id}: "))
+            self.student_courses[course_id] = mark
 
     def display_info(self):
         print(f"Student ID: {self.student_id}")
@@ -14,6 +18,7 @@ class Student:
         print(f"Date of Birth: {self.student_dob}")
 
     def display_marks(self):
+        print(f"Student marks for ID {self.student_id}:")
         for course_id, mark in self.student_courses.items():
             print(f"Course ID: {course_id}, Mark: {mark}")
 
@@ -47,13 +52,9 @@ class StudentManagementSystem:
             self.courses.append(course)
 
     def input_marks(self):
-        course_id = input("Enter the course ID to input marks: ")
-        mark = float(input("Enter the mark: "))
-
         for student in self.students:
-            student_id = student.student_id
-            student.input_marks(course_id, mark)
-            print(f"Mark {mark} for student {student_id} in course {course_id} has been recorded.")
+            student.input_marks()
+            print(f"Marks for student {student.student_id} have been recorded.")
 
     def list_courses(self):
         print("List of courses:")
@@ -66,14 +67,8 @@ class StudentManagementSystem:
             student.display_info()
 
     def show_marks(self):
-        course_id = input("Enter the course ID to show marks: ")
-        print(f"Student marks for course {course_id}:")
         for student in self.students:
-            student_id = student.student_id
-            student_name = student.student_name
-            if course_id in student.student_courses:
-                mark = student.student_courses[course_id]
-                print(f"Student ID: {student_id}, Student Name: {student_name}, Mark: {mark}")
+            student.display_marks()
 
     def run(self):
         self.input_students()
@@ -84,7 +79,7 @@ class StudentManagementSystem:
             print("1. Input marks")
             print("2. List courses")
             print("3. List students")
-            print("4. Show student marks for a course")
+            print("4. Show student marks for all courses")
             print("0. Exit")
 
             option = input("Enter your choice: ")
